@@ -1,0 +1,21 @@
+# =============================================================================
+#  voice-assistant — Asistente de Voz Inteligente y Control Domótico
+# =============================================================================
+services:
+  voice-assistant:
+    build: .
+    container_name: voice-assistant
+    restart: unless-stopped
+    network_mode: host
+    environment:
+      - TZ=Europe/Madrid
+      - DEEPGRAM_API_KEY=${DEEPGRAM_API_KEY}
+      - GEMINI_API_KEY=${GEMINI_API_KEY}
+      - HA_URL=${HA_URL:-http://localhost:8123}
+      - HA_TOKEN=${HA_TOKEN}
+      - TOMTOM_API_KEY=${TOMTOM_API_KEY}
+    volumes:
+      - ./:/app
+      - ${STORAGE_PATH:-/mnt/storage}/music:/music:ro
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro

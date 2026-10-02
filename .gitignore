@@ -1,0 +1,63 @@
+# =============================================================================
+# Gitignore para Repositorio Público de Infraestructura (IaC)
+# =============================================================================
+
+# Secretos, credenciales y variables de entorno
+.env
+.env.*
+!.env.example
+.restic_password
+.backup_secrets
+!.backup_secrets.example
+*.key
+*.pem
+*.token
+*.cert
+id_rsa*
+id_ed25519*
+
+# Bases de datos y volcados de datos
+*.sql
+*.sql.gz
+*.db
+*.db-shm
+*.db-wal
+*.sqlite
+*.sqlite3
+postgres/
+postgres_data/
+pgdata/
+redis/
+influxdb/
+
+# Logs, cachés y temporales
+*.log
+backup.log
+**/cache/
+**/logs/
+**/temp/
+**/tmp/
+**/data/trickplay/
+
+# Datos persistentes locales de servicios
+tools/gitea/data/
+tools/filebrowser/data/
+tools/guacamole/config/
+tools/uptime-kuma/data/
+tools/vaultwarden/data/
+web/data/
+homeassistant/config/home-assistant_v2.db*
+homeassistant/config/.storage/
+homeassistant/config/tts/
+homeassistant/config/backup_status.json
+
+# Paquetes y archivos comprimidos
+*.tar.gz
+*.zip
+*.7z
+
+# Archivos de sistema operativo e IDE
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/

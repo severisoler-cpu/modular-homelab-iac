@@ -1,0 +1,16 @@
+# =============================================================================
+#  tools/guacamole — Apache Guacamole (Acceso Remoto RDP/VNC Web sin Clientes)
+#  Soporte multi-arquitectura ARM64 (RPi 5) con 2FA TOTP integrado
+# =============================================================================
+services:
+  guacamole:
+    image: flcontainers/guacamole:latest
+    container_name: guacamole
+    restart: unless-stopped
+    ports:
+      - "8088:8080"
+    environment:
+      - TZ=Europe/Madrid
+      - EXTENSIONS=auth-totp
+    volumes:
+      - ./config:/config

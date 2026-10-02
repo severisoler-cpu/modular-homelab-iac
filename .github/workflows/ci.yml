@@ -1,0 +1,73 @@
+name: CI Infrastructure Validation
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  lint-shell:
+    name: Lint Shell Scripts (ShellCheck)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Run ShellCheck
+        uses: ludeeus/action-shellcheck@master
+        with:
+          scandir: '.'
+          severity: warning
+          ignore_paths: '.git'
+
+  validate-docker-compose:
+    name: Validate Docker Compose Stacks
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Set up Docker Compose CLI
+        run: |
+          docker compose version
+
+      - name: Validate Syntax for All Stacks
+        run: |
+          echo "=== Validating Docker Compose Files ==="
+          FAILED=0
+          
+          # Iterate over all docker-compose.yml files
+          find . -name "docker-compose.yml" | while read -r compose_file; do
+            stack_dir=$(dirname "$compose_file")
+            echo "Checking stack: $stack_dir"
+            
+            # Prepare dummy env if .env.example exists
+            ENV_ARG=""
+            if [ -f "$stack_dir/.env.example" ]; then
+              ENV_ARG="--env-file $stack_dir/.env.example"
+            fi
+            
+            # Validate compose configuration
+            if ! docker compose $ENV_ARG -f "$compose_file" config --quiet; then
+              echo "❌ Error in: $compose_file"
+              FAILED=1
+            else
+              echo "✅ Valid: $compose_file"
+            fi
+          done
+
+  secret-detection:
+    name: Detect Leaked Secrets (Gitleaks)
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Run Gitleaks
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

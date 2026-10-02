@@ -1,0 +1,44 @@
+# =============================================================================
+#  music — Navidrome (Servidor de Streaming de Música) + Deemix
+#
+#  ⚠️ AVISO DE USO EDUCATIVO Y RESPONSABILIDAD LEGAL:
+#  Este stack está concebido y configurado para la catalogación, gestión y streaming
+#  de bibliotecas de música de propiedad personal, grabaciones de autoría propia o pistas
+#  distribuidas bajo licencias libres y abiertas (Creative Commons, dominio público).
+#  Queda terminantemente desaconsejado y bajo la total responsabilidad del usuario
+#  cualquier utilización de estas herramientas para la obtención, descarga o difusión
+#  no autorizada de archivos musicales sujetos a derechos de propiedad intelectual.
+# =============================================================================
+services:
+
+  navidrome:
+    image: deluan/navidrome:latest
+    container_name: navidrome
+    user: "1000:1000"
+    environment:
+      ND_CONFIGFILE: "/data/navidrome.toml"
+      ND_SCANWATCHFORCHANGES: "true"
+      ND_SCANSCHEDULE: "@every 1h"
+      ND_LOGLEVEL: info
+      ND_SESSIONTIMEOUT: "24h"
+      ND_BASEURL: ""
+    volumes:
+      - ./config/navidrome:/data
+      - ${STORAGE_PATH:-/mnt/storage}/music:/music:ro
+    ports:
+      - "4533:4533"
+    restart: unless-stopped
+
+  deemix:
+    image: ghcr.io/bambanah/deemix:latest
+    container_name: deemix
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Madrid
+    volumes:
+      - ./config/deemix:/config
+      - ${STORAGE_PATH:-/mnt/storage}/music:/downloads
+    ports:
+      - "6595:6595"
+    restart: unless-stopped

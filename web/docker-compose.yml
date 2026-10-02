@@ -1,0 +1,13 @@
+# =============================================================================
+#  web — Nginx Reverse Proxy & Servidor Web Estático
+# =============================================================================
+services:
+  nginx-web:
+    image: nginx:latest
+    container_name: nginx-web
+    restart: unless-stopped
+    mem_limit: 64m
+    network_mode: host
+    volumes:
+      - ./html:/usr/share/nginx/html:ro
+      - ./default.conf:/etc/nginx/conf.d/default.conf:ro

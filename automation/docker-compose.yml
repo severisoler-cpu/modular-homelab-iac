@@ -1,0 +1,55 @@
+# =============================================================================
+#  automation — n8n (Motor de Flujos y Automatización) + PostgreSQL
+#  El acceso externo se gestiona de forma segura mediante Cloudflare Tunnels
+# =============================================================================
+services:
+
+  postgres:
+    image: postgres:15
+    container_name: n8n-postgres
+    restart: unless-stopped
+    environment:
+      - POSTGRES_USER=n8n
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=n8n
+      - TZ=Europe/Madrid
+    volumes:
+      - n8n_db:/var/lib/postgresql/data
+
+  n8n:
+    image: n8nio/n8n:latest
+    container_name: n8n
+    restart: unless-stopped
+    depends_on:
+      - postgres
+    ports:
+      - "5678:5678"
+    environment:
+      - TZ=Europe/Madrid
+      - N8N_TIMEZONE=Europe/Madrid
+      - N8N_PORT=5678
+      - N8N_PROTOCOL=http
+      - N8N_SECURE_COOKIE=false
+      - WEBHOOK_URL=${WEBHOOK_URL}
+      - N8N_EDITOR_BASE_URL=${N8N_EDITOR_BASE_URL}
+      - N8N_HOST=0.0.0.0
+      - N8N_BASIC_AUTH_ACTIVE=true
+      - N8N_BASIC_AUTH_USER=admin
+      - N8N_BASIC_AUTH_PASSWORD=${N8N_BASIC_AUTH_PASSWORD}
+      - N8N_ENCRYPTION_KEY=${N8N_ENCRYPTION_KEY}
+      - DB_TYPE=postgresdb
+      - DB_POSTGRESDB_HOST=postgres
+      - DB_POSTGRESDB_PORT=5432
+      - DB_POSTGRESDB_DATABASE=n8n
+      - DB_POSTGRESDB_USER=n8n
+      - DB_POSTGRESDB_PASSWORD=${POSTGRES_PASSWORD}
+      - N8N_CORS_ALLOWED_ORIGINS=*
+    volumes:
+      - n8n_data:/home/node/.n8n
+    user: "1000:1000"
+
+volumes:
+  n8n_data:
+    name: n8n_n8n_data
+  n8n_db:
+    name: n8n_n8n_db

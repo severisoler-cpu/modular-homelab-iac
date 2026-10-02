@@ -1,0 +1,19 @@
+# =============================================================================
+#  homeassistant — Domótica, voz y automatización del hogar
+#  Puerto: 8123 (vía network_mode: host para descubrimiento mDNS/SSDP)
+# =============================================================================
+services:
+
+  homeassistant:
+    image: ghcr.io/home-assistant/home-assistant:stable
+    container_name: homeassistant
+    restart: unless-stopped
+    privileged: true
+    network_mode: host
+    environment:
+      - TZ=Europe/Madrid
+    volumes:
+      - ./config:/config
+      - /etc/localtime:/etc/localtime:ro
+      - /run/dbus:/run/dbus:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro

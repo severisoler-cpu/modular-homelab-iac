@@ -1,0 +1,13 @@
+# =============================================================================
+#  maintainerr — Gestión automática y limpieza de bibliotecas multimedia
+# =============================================================================
+services:
+
+  maintainerr:
+    image: jorenn92/maintainerr:latest
+    container_name: maintainerr
+    restart: unless-stopped
+    volumes:
+      - ./config/maintainerr/data:/data
+    ports:
+      - "6246:6246"

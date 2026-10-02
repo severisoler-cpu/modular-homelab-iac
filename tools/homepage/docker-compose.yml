@@ -1,0 +1,21 @@
+# =============================================================================
+#  tools/homepage — Dashboard Central y Panel de Control del Servidor
+# =============================================================================
+services:
+  homepage:
+    image: ghcr.io/gethomepage/homepage:latest
+    container_name: homepage
+    restart: unless-stopped
+    mem_limit: 250m
+    environment:
+      - PUID=1000
+      - PGID=984
+      - TZ=Europe/Madrid
+      - HOMEPAGE_ALLOWED_HOSTS=*
+    ports:
+      - "3001:3000"
+    volumes:
+      - ./config:/app/config
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+      - ${STORAGE_PATH:-/mnt/storage}:/storage:ro
+      - /sys:/sys:ro

@@ -1,0 +1,9 @@
+[
+  {
+    "id": "cam-01",
+    "name": "Cámara Ejemplo 1",
+    "lat": 39.4699,
+    "lon": -0.3763,
+    "url": "https://ejemplo.com/camara1.jpg"
+  }
+]

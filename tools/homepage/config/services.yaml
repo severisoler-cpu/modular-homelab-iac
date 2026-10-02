@@ -1,0 +1,161 @@
+---
+- Media & Streaming:
+    - Jellyfin:
+        icon: jellyfin.png
+        href: http://192.168.1.100:8096
+        description: Servidor de películas y series
+        server: my-docker
+        container: jellyfin
+        widget:
+            type: jellyfin
+            url: http://192.168.1.100:8096
+            key: "TU_API_KEY_AQUI"
+    - Jellyseerr:
+        icon: overseerr.png
+        href: http://192.168.1.100:5055
+        description: Peticiones de contenido
+        server: my-docker
+        container: jellyseerr
+        widget:
+            type: jellyseerr
+            url: http://192.168.1.100:5055
+            key: "TU_API_KEY_AQUI"
+    - Navidrome:
+        icon: navidrome.png
+        href: http://192.168.1.100:4533
+        description: Servidor de Música
+        server: my-docker
+        container: navidrome
+    - Immich:
+        icon: immich.png
+        href: http://192.168.1.100:2283
+        description: Gestión y respaldo fotográfico
+        server: my-docker
+        container: immich_server
+
+- Descargas y Automatización:
+    - qBittorrent:
+        icon: qbittorrent.png
+        href: http://192.168.1.100:8090
+        description: Cliente Torrent (Vía VPN)
+        server: my-docker
+        container: qbittorrent
+        widget:
+            type: qbittorrent
+            url: http://192.168.1.100:8090
+            username: admin
+            password: TU_PASSWORD_AQUI
+    - Deemix:
+        icon: deemix.png
+        href: http://192.168.1.100:6595
+        description: Descargas de Música
+        server: my-docker
+        container: deemix
+    - Radarr:
+        icon: radarr.png
+        href: http://192.168.1.100:7878
+        description: Películas
+        server: my-docker
+        container: radarr
+        widget:
+            type: radarr
+            url: http://192.168.1.100:7878
+            key: TU_API_KEY_AQUI
+    - Sonarr:
+        icon: sonarr.png
+        href: http://192.168.1.100:8989
+        description: Series
+        server: my-docker
+        container: sonarr
+        widget:
+            type: sonarr
+            url: http://192.168.1.100:8989
+            key: TU_API_KEY_AQUI
+    - Prowlarr:
+        icon: prowlarr.png
+        href: http://192.168.1.100:9696
+        description: Indexadores
+        server: my-docker
+        container: prowlarr
+        widget:
+            type: prowlarr
+            url: http://192.168.1.100:9696
+            key: TU_API_KEY_AQUI
+    - Jackett:
+        icon: jackett.png
+        href: http://192.168.1.100:9117
+        description: Buscador de Torrents
+        server: my-docker
+        container: jackett
+        widget:
+            type: jackett
+            url: http://192.168.1.100:9117
+            key: TU_API_KEY_AQUI
+            password: TU_PASSWORD_AQUI
+
+- Herramientas y Productividad:
+    - Apache Guacamole:
+        icon: apache-guacamole.png
+        href: https://guacamole.tu-dominio.com
+        description: Control Remoto PC (RDP/VNC)
+        server: my-docker
+        container: guacamole
+    - Open-WebUI:
+        icon: open-webui.png
+        href: http://192.168.1.100:3000
+        description: IA Local
+        server: my-docker
+        container: open-webui
+    - N8N:
+        icon: n8n.png
+        href: http://192.168.1.100:5678
+        description: Automatizaciones y Flujos de Trabajo
+        server: my-docker
+        container: n8n
+    - Home Assistant:
+        icon: home-assistant.png
+        href: http://192.168.1.100:8123
+        description: Domótica y Control del Hogar
+        server: my-docker
+        container: homeassistant
+    - Gitea:
+        icon: gitea.png
+        href: http://192.168.1.100:3050
+        description: Repositorios de Código Git
+        server: my-docker
+        container: gitea
+    - FileBrowser:
+        icon: filebrowser.png
+        href: http://192.168.1.100:8081
+        description: Explorador de Archivos Web
+        server: my-docker
+        container: filebrowser
+    - Uptime Kuma:
+        icon: uptime-kuma.png
+        href: http://192.168.1.100:3002
+        description: Monitor de estado y alertas
+        server: my-docker
+        container: uptime-kuma
+    - Vaultwarden:
+        icon: bitwarden.png
+        href: https://vault.tu-dominio.com
+        description: Gestor de Contraseñas Privado
+        server: my-docker
+        container: vaultwarden
+
+- Infraestructura:
+    - VPN (Gluetun):
+        icon: wireguard.png
+        href: "#"
+        description: WireGuard VPN Gateway
+        server: my-docker
+        container: gluetun_vpn
+    - Scrutiny:
+        icon: scrutiny.png
+        href: http://192.168.1.100:8086
+        description: Salud de discos (S.M.A.R.T)
+        server: my-docker
+        container: scrutiny
+        widget:
+          type: scrutiny
+          url: http://192.168.1.100:8086

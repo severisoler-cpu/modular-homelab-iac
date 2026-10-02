@@ -1,0 +1,22 @@
+# =============================================================================
+#  tools/scrutiny — Monitorización de Salud de Discos (S.M.A.R.T)
+# =============================================================================
+services:
+  scrutiny:
+    image: ghcr.io/analogj/scrutiny:master-omnibus
+    container_name: scrutiny
+    cap_add:
+      - SYS_RAWIO
+      - SYS_ADMIN
+    ports:
+      - "8086:8080" # Web UI
+      - "8087:8086" # InfluxDB interna
+    volumes:
+      - /run/udev:/run/udev:ro
+      - ./config:/opt/scrutiny/config
+      - ./influxdb:/opt/scrutiny/influxdb
+    devices:
+      - /dev/sda       # Disco de almacenamiento secundario (HDD / SATA)
+      - /dev/nvme0n1   # Disco principal del sistema (NVMe / SSD)
+      - /dev/nvme0
+    restart: unless-stopped

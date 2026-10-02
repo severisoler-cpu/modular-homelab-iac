@@ -1,0 +1,22 @@
+# =============================================================================
+#  media — Jellyfin (Servidor Multimedia con Aceleración Hardware Pi 5)
+# =============================================================================
+services:
+
+  jellyfin:
+    image: jellyfin/jellyfin:latest
+    container_name: jellyfin
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/Madrid
+    volumes:
+      - ./config/jellyfin/config:/config
+      - ./config/jellyfin/cache:/cache
+      - ${STORAGE_PATH:-/mnt/storage}/media:/media
+      - ${STORAGE_PATH:-/mnt/storage}/music:/music
+    devices:
+      - /dev/dri:/dev/dri   # Aceleración por hardware para transcodificación de vídeo
+    ports:
+      - "8096:8096"
+    restart: unless-stopped

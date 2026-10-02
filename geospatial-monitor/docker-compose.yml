@@ -1,0 +1,23 @@
+# =============================================================================
+#  geospatial-monitor — Plataforma de Monitorización Geoespacial en Tiempo Real
+# =============================================================================
+services:
+  geospatial-monitor:
+    build: .
+    container_name: geospatial-monitor
+    restart: unless-stopped
+    ports:
+      - "4173:4173"
+    environment:
+      - TZ=Europe/Madrid
+      - NODE_ENV=production
+      - HOST=0.0.0.0
+      - PORT=4173
+      - PUPPETEER_SKIP_DOWNLOAD=true
+      - CCTV_SOURCES_FILE=/app/camaras.json
+      - CESIUM_ION_TOKEN=${CESIUM_ION_TOKEN}
+      - TOMTOM_API_KEY=${TOMTOM_API_KEY}
+    volumes:
+      - ./camaras.example.json:/app/camaras.json:ro
+    mem_limit: 512m
+    mem_reservation: 128m
